@@ -2,182 +2,208 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Bookmarklet Personalizado</title>
-    <link rel="icon" href="https://cdn6.aptoide.com/imgs/d/1/2/d12daafa35d7b8b574cec45da22ea81c_icon.png" type="image/png">
+    <title>Sales - Leia</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        h1 { color: #333; }
-        p { margin-bottom: 15px; }
-        .bookmarklet-link {
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            border: 1px solid #0056b3;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
         }
-        .bookmarklet-link:hover {
-            background-color: #0056b3;
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #4b5563;
+        }
+        a.bookmarklet {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        a.bookmarklet:hover {
+            background-color: #1d4ed8;
         }
         .instructions {
             margin-top: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-left: 3px solid #007bff;
+            font-size: 14px;
+            color: #6b7280;
         }
     </style>
 </head>
 <body>
-    <h1>Meu Bookmarklet com Ícone e Log</h1>
-
-    <p>Arraste o link abaixo para a sua barra de favoritos:</p>
-
-    <p>
-        <a class="bookmarklet-link" href="javascript:(function(){
-          const e=document.createElement('div');
-          e.style.position='fixed';
-          e.style.top='0';
-          e.style.left='0';
-          e.style.width='100vw';
-          e.style.height='100vh';
-          e.style.backgroundColor='white';
-          e.style.zIndex='999999';
-          e.style.pointerEvents='none';
-          document.body.appendChild(e);
+    <div class="card">
+        <h1>Instalar Bookmarklet</h1>
+        <p>Arraste o botão abaixo para sua barra de favoritos.</p>
+        <a href="javascript:(function(){
+      const e=document.createElement('div');
+      e.style.position='fixed';
+      e.style.top='0';
+      e.style.left='0';
+      e.style.width='100vw';
+      e.style.height='100vh';
+      e.style.backgroundColor='white';
+      e.style.zIndex='999999';
+      e.style.pointerEvents='none';
+      document.body.appendChild(e);
+      setTimeout(()=>{
+        document.body.removeChild(e);
+        function t(msg){ /* Função original do toast */
+          msg = msg || '✅ Página recarregada!';
+          const t_toast_el = document.createElement('div'); /* Elemento do toast (era 't' no original) */
+          t_toast_el.style.position = 'fixed';
+          t_toast_el.style.top = '20px';
+          t_toast_el.style.right = '20px';
+          t_toast_el.style.background = '#d1fae5';
+          t_toast_el.style.color = '#065f46';
+          t_toast_el.style.padding = '12px 18px';
+          t_toast_el.style.borderRadius = '12px';
+          t_toast_el.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+          t_toast_el.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+          t_toast_el.style.fontSize = '14px';
+          t_toast_el.style.zIndex = '99999';
+          t_toast_el.style.border = '1px solid #a7f3d0';
+          t_toast_el.style.transition = 'opacity 0.5s ease';
+          t_toast_el.innerText = msg;
+          document.body.appendChild(t_toast_el);
           setTimeout(()=>{
-            document.body.removeChild(e);
-            function t(msg){
-              msg = msg || '✅ Página recarregada!';
-              const t_toast_el = document.createElement('div');
-              t_toast_el.style.position = 'fixed';
-              t_toast_el.style.top = '20px';
-              t_toast_el.style.right = '20px';
-              t_toast_el.style.background = '#d1fae5';
-              t_toast_el.style.color = '#065f46';
-              t_toast_el.style.padding = '12px 18px';
-              t_toast_el.style.borderRadius = '12px';
-              t_toast_el.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
-              t_toast_el.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
-              t_toast_el.style.fontSize = '14px';
-              t_toast_el.style.zIndex = '99999';
-              t_toast_el.style.border = '1px solid #a7f3d0';
-              t_toast_el.style.transition = 'opacity 0.5s ease';
-              t_toast_el.innerText = msg;
-              document.body.appendChild(t_toast_el);
-              setTimeout(()=>{
-                t_toast_el.style.opacity = '0';
-                setTimeout(()=>t_toast_el.remove(), 500);
-              }, 3500);
+            t_toast_el.style.opacity = '0';
+            setTimeout(()=>t_toast_el.remove(), 500);
+          }, 3500);
+        }
+        t(); /* Chama a função de toast */
+    
+        /* === MODIFICAÇÕES PARA O PAINEL DE LOG === */
+        const o = true; /* Habilita os logs na função r(msg) */
+        let n = document.createElement('div'); /* 'n' agora é o painel de log */
+        n.style.position = 'fixed';
+        n.style.bottom = '20px';
+        n.style.right = '20px';
+        n.style.width = '300px'; /* Largura do painel de log */
+        n.style.maxHeight = '40vh'; /* Altura máxima, com rolagem */
+        n.style.overflowY = 'auto'; /* Habilita rolagem vertical */
+        n.style.background = '#d1fae5'; /* Mesmo estilo do toast */
+        n.style.color = '#065f46';
+        n.style.padding = '10px';
+        n.style.borderRadius = '12px';
+        n.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+        n.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+        n.style.fontSize = '13px'; /* Fonte um pouco menor para mais linhas de log */
+        n.style.zIndex = '99998'; /* Logo abaixo do toast, se necessário */
+        n.style.border = '1px solid #a7f3d0';
+        /* Adiciona um título e uma lista (ul) para os logs */
+        n.innerHTML = '<div style=&quot;font-weight: bold; padding-bottom: 5px; margin-bottom:5px; border-bottom: 1px solid #a7f3d0;&quot;>Log de Atividades:</div><ul id=&quot;bookmarkletStatusLogList&quot; style=&quot;list-style: none; padding: 0; margin: 0;&quot;></ul>';
+        document.body.appendChild(n);
+        const statusLogList = n.querySelector('#bookmarkletStatusLogList'); /* Referência para a lista de logs */
+        /* === FIM DAS MODIFICAÇÕES PARA O PAINEL DE LOG === */
+    
+        function r(msg){ /* Função original r(msg), agora atualiza o painel de log */
+          if(o && statusLogList){ /* Verifica se o e a lista de log existem */
+            const li = document.createElement('li');
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            li.innerText = '[' + time + '] ' + msg;
+            li.style.padding = '3px 0';
+            li.style.borderBottom = '1px dashed #b3e0c5'; /* Linha separadora suave */
+            if (statusLogList.firstChild) {
+              li.style.marginTop = '3px';
             }
-            t();
-            const o = true;
-            let n = document.createElement('div');
-            n.style.position = 'fixed';
-            n.style.bottom = '20px';
-            n.style.right = '20px';
-            n.style.width = '300px';
-            n.style.maxHeight = '40vh';
-            n.style.overflowY = 'auto';
-            n.style.background = '#d1fae5';
-            n.style.color = '#065f46';
-            n.style.padding = '10px';
-            n.style.borderRadius = '12px';
-            n.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
-            n.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
-            n.style.fontSize = '13px';
-            n.style.zIndex = '99998';
-            n.style.border = '1px solid #a7f3d0';
-            n.innerHTML = '<div style=&quot;font-weight: bold; padding-bottom: 5px; margin-bottom:5px; border-bottom: 1px solid #a7f3d0;&quot;>Log de Atividades:</div><ul id=&quot;bookmarkletStatusLogList&quot; style=&quot;list-style: none; padding: 0; margin: 0;&quot></ul>';
-            document.body.appendChild(n);
-            const statusLogList = n.querySelector('#bookmarkletStatusLogList');
-            function r(msg){
-              if(o && statusLogList){
-                const li = document.createElement('li');
-                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                li.innerText = '[' + time + '] ' + msg;
-                li.style.padding = '3px 0';
-                li.style.borderBottom = '1px dashed #b3e0c5';
-                if (statusLogList.firstChild) {
-                  li.style.marginTop = '3px';
-                }
-                statusLogList.appendChild(li);
-                n.scrollTop = n.scrollHeight;
-              }
-            }
-            function i(label){
+            statusLogList.appendChild(li);
+            n.scrollTop = n.scrollHeight; /* Rola o painel para mostrar a última mensagem */
+          }
+        }
+    
+        function i(label){
+          const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+          if(btn && typeof btn.click === 'function' && !btn.disabled && btn.offsetParent !== null){
+            btn.click();
+            return true;
+          }
+          return false;
+        }
+    
+        function a(label='Continuar'){
+          return new Promise(resolve => {
+            const observer = new MutationObserver(()=>{
               const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-              if(btn && typeof btn.click === 'function' && !btn.disabled && btn.offsetParent !== null){
-                btn.click();
-                return true;
+              if(btn){
+                const clickHandler = ()=>{
+                  btn.removeEventListener('click', clickHandler);
+                  observer.disconnect();
+                  resolve();
+                };
+                btn.addEventListener('click', clickHandler);
               }
-              return false;
-            }
-            function a(label='Continuar'){
-              return new Promise(resolve => {
-                const observer = new MutationObserver(()=>{
-                  const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-                  if(btn){
-                    const clickHandler = ()=>{
-                      btn.removeEventListener('click', clickHandler);
-                      observer.disconnect();
-                      resolve();
-                    };
-                    btn.addEventListener('click', clickHandler);
-                  }
-                });
-                observer.observe(document.body, {childList:true, subtree:true});
-                const btnNow = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-                if(btnNow){
-                  btnNow.addEventListener('click', ()=>{
-                    btnNow.removeEventListener('click', arguments.callee);
-                    observer.disconnect();
-                    resolve();
-                  });
-                }
+            });
+            observer.observe(document.body, {childList:true, subtree:true});
+            const btnNow = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+            if(btnNow){
+              btnNow.addEventListener('click', ()=>{
+                btnNow.removeEventListener('click', arguments.callee);
+                observer.disconnect();
+                resolve();
               });
             }
-            async function c(seconds){
-              for(let t_loop=seconds; t_loop>0; t_loop--){
-                r('✅ Aguardando '+t_loop+'s...');
-                await new Promise(r_promise => setTimeout(r_promise, 1000));
+          });
+        }
+    
+        async function c(seconds){
+          for(let t_loop=seconds; t_loop>0; t_loop--){ /* Variável de loop 't' renomeada para 't_loop' para clareza */
+            r('✅ Aguardando '+t_loop+'s...');
+            await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+          }
+        }
+    
+        async function d(){
+          await a(); /* Espera o primeiro clique em 'Continuar' se houver */
+          r('🚀 Script iniciado após clique manual!');
+          let e_loop = true; /* Variável 'e' renomeada para 'e_loop' para clareza */
+          while(e_loop){
+            r('⏸️ Tentando pausar...');
+            const paused = i('Pausar');
+            if(paused){
+              await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+              r('▶️ Tentando continuar...');
+              const continued = i('Continuar');
+              if(continued){
+                await c(20);
+              } else {
+                r('⚠️ Botão Continuar indisponível. Tentando em 5s...');
+                await c(5);
               }
+            } else {
+              r('⚠️ Botão Pausar indisponível. Tentando em 5s...');
+              await c(5);
             }
-            async function d(){
-              await a();
-              r('🚀 Script iniciado após clique manual!');
-              let e_loop = true;
-              while(e_loop){
-                r('⏸️ Tentando pausar...');
-                const paused = i('Pausar');
-                if(paused){
-                  await new Promise(r_promise => setTimeout(r_promise, 1000));
-                  r('▶️ Tentando continuar...');
-                  const continued = i('Continuar');
-                  if(continued){
-                    await c(20);
-                  } else {
-                    r('⚠️ Botão Continuar indisponível. Tentando em 5s...');
-                    await c(5);
-                  }
-                } else {
-                  r('⚠️ Botão Pausar indisponível. Tentando em 5s...');
-                  await c(5);
-                }
-              }
-            }
-            d();
-          }, 1000);
-        })();">Meu Bookmarklet (Com Log e Ícone)</a>
-    </p>
+          }
+        }
+        d();
+      }, 1000);
+    })();">Script Arvore</a>
 
-    <div class="instructions">
-        <strong>Como funciona o ícone:</strong>
-        <p>O ícone que aparecerá na sua barra de favoritos é geralmente o ícone definido nesta página (agora um símbolo de download). O próprio código do bookmarklet não armazena um ícone. Diferentes navegadores podem ter comportamentos ligeiramente distintos, mas esta é a forma padrão de influenciar o ícone do bookmarklet.</p>
-        <p>Você pode substituir o valor de <code>href</code> na tag <code>&lt;link rel="icon" ...&gt;</code> no <code>&lt;head&gt;</code> deste arquivo HTML por um caminho para seu próprio arquivo de imagem (ex: <code>href="meu_icone.png"</code> ou <code>href="meu_icone.ico"</code>) se preferir usar uma imagem personalizada.</p>
+
+        
+        <div class="instructions">
+            👉 Se não vê a barra de favoritos, ative ela no navegador (Ctrl+Shift+B).
+        </div>
     </div>
-
 </body>
 </html>
