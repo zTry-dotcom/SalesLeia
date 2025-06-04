@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Sales - Leia</title>
+    <title>Instalador de Bookmarklet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,166 +54,153 @@
     <div class="card">
         <h1>Instalar Bookmarklet</h1>
         <p>Arraste o botão abaixo para sua barra de favoritos.</p>
-        <a class="bookmarklet" href="javascript:(function(){
-    const e=document.createElement('div');
-    e.style.position='fixed';
-    e.style.top='0';
-    e.style.left='0';
-    e.style.width='100vw';
-    e.style.height='100vh';
-    e.style.backgroundColor='white';
-    e.style.zIndex='999999';
-    e.style.pointerEvents='none';
-    document.body.appendChild(e);
-    setTimeout(()=>{
+        <a href="javascript:(function(){
+      const e=document.createElement('div');
+      e.style.position='fixed';
+      e.style.top='0';
+      e.style.left='0';
+      e.style.width='100vw';
+      e.style.height='100vh';
+      e.style.backgroundColor='white';
+      e.style.zIndex='999999';
+      e.style.pointerEvents='none';
+      document.body.appendChild(e);
+      setTimeout(()=>{
         document.body.removeChild(e);
-        let t_toast_el = null; // Variable to hold the single toast element
         function t(msg){ /* Função original do toast */
-            msg = msg || '✅ Página recarregada!';
-            if (t_toast_el) { // If a toast already exists, update its message
-                t_toast_el.innerText = msg;
-                t_toast_el.style.opacity = '1'; // Ensure it's visible if it was fading
-                clearTimeout(t_toast_el.fadeTimeout); // Clear any existing fade-out timeout
-            } else {
-                t_toast_el = document.createElement('div');
-                t_toast_el.style.position = 'fixed';
-                t_toast_el.style.top = '20px';
-                t_toast_el.style.right = '20px';
-                t_toast_el.style.background = '#d1fae5';
-                t_toast_el.style.color = '#065f46';
-                t_toast_el.style.padding = '12px 18px';
-                t_toast_el.style.borderRadius = '12px';
-                t_toast_el.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
-                t_toast_el.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
-                t_toast_el.style.fontSize = '14px';
-                t_toast_el.style.zIndex = '99999';
-                t_toast_el.style.border = '1px solid #a7f3d0';
-                t_toast_el.style.transition = 'opacity 0.5s ease';
-                t_toast_el.innerText = msg;
-                document.body.appendChild(t_toast_el);
-            }
-            t_toast_el.fadeTimeout = setTimeout(()=>{
-                t_toast_el.style.opacity = '0';
-                setTimeout(()=> {
-                    if (t_toast_el && t_toast_el.parentNode) { // Check if it still exists before removing
-                        t_toast_el.remove();
-                        t_toast_el = null; // Reset the reference
-                    }
-                }, 500);
-            }, 3500);
+          msg = msg || '✅ Página recarregada!';
+          const t_toast_el = document.createElement('div'); /* Elemento do toast (era 't' no original) */
+          t_toast_el.style.position = 'fixed';
+          t_toast_el.style.top = '20px';
+          t_toast_el.style.right = '20px';
+          t_toast_el.style.background = '#d1fae5';
+          t_toast_el.style.color = '#065f46';
+          t_toast_el.style.padding = '12px 18px';
+          t_toast_el.style.borderRadius = '12px';
+          t_toast_el.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+          t_toast_el.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+          t_toast_el.style.fontSize = '14px';
+          t_toast_el.style.zIndex = '99999';
+          t_toast_el.style.border = '1px solid #a7f3d0';
+          t_toast_el.style.transition = 'opacity 0.5s ease';
+          t_toast_el.innerText = msg;
+          document.body.appendChild(t_toast_el);
+          setTimeout(()=>{
+            t_toast_el.style.opacity = '0';
+            setTimeout(()=>t_toast_el.remove(), 500);
+          }, 3500);
         }
-        t(); /* Chama a função de toast inicial */
+        t(); /* Chama a função de toast */
     
-        /* === MODIFICAÇÕES PARA O PAINEL DE LOG (agora é um toast para logs) === */
+        /* === MODIFICAÇÕES PARA O PAINEL DE LOG === */
         const o = true; /* Habilita os logs na função r(msg) */
-        let n_log_toast = null; /* Variável para segurar o elemento único de log */
-        function r(msg){ /* Função r(msg), agora atua como um toast para logs */
-            if(o){
-                const displayMsg = '[' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + '] ' + msg;
-                if (n_log_toast) {
-                    n_log_toast.innerText = displayMsg;
-                    n_log_toast.style.opacity = '1';
-                    clearTimeout(n_log_toast.fadeTimeout);
-                } else {
-                    n_log_toast = document.createElement('div');
-                    n_log_toast.style.position = 'fixed';
-                    n_log_toast.style.bottom = '20px'; /* Posição inferior */
-                    n_log_toast.style.right = '20px';
-                    n_log_toast.style.background = '#d1fae5';
-                    n_log_toast.style.color = '#065f46';
-                    n_log_toast.style.padding = '12px 18px';
-                    n_log_toast.style.borderRadius = '12px';
-                    n_log_toast.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
-                    n_log_toast.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
-                    n_log_toast.style.fontSize = '14px';
-                    n_log_toast.style.zIndex = '99998';
-                    n_log_toast.style.border = '1px solid #a7f3d0';
-                    n_log_toast.style.transition = 'opacity 0.5s ease';
-                    n_log_toast.innerText = displayMsg;
-                    document.body.appendChild(n_log_toast);
-                }
-                n_log_toast.fadeTimeout = setTimeout(()=>{
-                    n_log_toast.style.opacity = '0';
-                    setTimeout(()=> {
-                        if (n_log_toast && n_log_toast.parentNode) {
-                            n_log_toast.remove();
-                            n_log_toast = null;
-                        }
-                    }, 500);
-                }, 3500);
-            }
-        }
+        let n = document.createElement('div'); /* 'n' agora é o painel de log */
+        n.style.position = 'fixed';
+        n.style.bottom = '20px';
+        n.style.right = '20px';
+        n.style.width = '300px'; /* Largura do painel de log */
+        n.style.maxHeight = '40vh'; /* Altura máxima, com rolagem */
+        n.style.overflowY = 'auto'; /* Habilita rolagem vertical */
+        n.style.background = '#d1fae5'; /* Mesmo estilo do toast */
+        n.style.color = '#065f46';
+        n.style.padding = '10px';
+        n.style.borderRadius = '12px';
+        n.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+        n.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+        n.style.fontSize = '13px'; /* Fonte um pouco menor para mais linhas de log */
+        n.style.zIndex = '99998'; /* Logo abaixo do toast, se necessário */
+        n.style.border = '1px solid #a7f3d0';
+        /* Adiciona um título e uma lista (ul) para os logs */
+        n.innerHTML = '<div style=&quot;font-weight: bold; padding-bottom: 5px; margin-bottom:5px; border-bottom: 1px solid #a7f3d0;&quot;>Log de Atividades:</div><ul id=&quot;bookmarkletStatusLogList&quot; style=&quot;list-style: none; padding: 0; margin: 0;&quot;></ul>';
+        document.body.appendChild(n);
+        const statusLogList = n.querySelector('#bookmarkletStatusLogList'); /* Referência para a lista de logs */
         /* === FIM DAS MODIFICAÇÕES PARA O PAINEL DE LOG === */
     
-        function i(label){
-            const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-            if(btn && typeof btn.click === 'function' && !btn.disabled && btn.offsetParent !== null){
-                btn.click();
-                return true;
+        function r(msg){ /* Função original r(msg), agora atualiza o painel de log */
+          if(o && statusLogList){ /* Verifica se o e a lista de log existem */
+            const li = document.createElement('li');
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            li.innerText = '[' + time + '] ' + msg;
+            li.style.padding = '3px 0';
+            li.style.borderBottom = '1px dashed #b3e0c5'; /* Linha separadora suave */
+            if (statusLogList.firstChild) {
+              li.style.marginTop = '3px';
             }
-            return false;
+            statusLogList.appendChild(li);
+            n.scrollTop = n.scrollHeight; /* Rola o painel para mostrar a última mensagem */
+          }
+        }
+    
+        function i(label){
+          const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+          if(btn && typeof btn.click === 'function' && !btn.disabled && btn.offsetParent !== null){
+            btn.click();
+            return true;
+          }
+          return false;
         }
     
         function a(label='Continuar'){
-            return new Promise(resolve => {
-                const observer = new MutationObserver(()=>{
-                    const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-                    if(btn){
-                        const clickHandler = ()=>{
-                            btn.removeEventListener('click', clickHandler);
-                            observer.disconnect();
-                            resolve();
-                        };
-                        btn.addEventListener('click', clickHandler);
-                    }
-                });
-                observer.observe(document.body, {childList:true, subtree:true});
-                const btnNow = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
-                if(btnNow){
-                    btnNow.addEventListener('click', ()=>{
-                        btnNow.removeEventListener('click', arguments.callee);
-                        observer.disconnect();
-                        resolve();
-                    });
-                }
+          return new Promise(resolve => {
+            const observer = new MutationObserver(()=>{
+              const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+              if(btn){
+                const clickHandler = ()=>{
+                  btn.removeEventListener('click', clickHandler);
+                  observer.disconnect();
+                  resolve();
+                };
+                btn.addEventListener('click', clickHandler);
+              }
             });
+            observer.observe(document.body, {childList:true, subtree:true});
+            const btnNow = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+            if(btnNow){
+              btnNow.addEventListener('click', ()=>{
+                btnNow.removeEventListener('click', arguments.callee);
+                observer.disconnect();
+                resolve();
+              });
+            }
+          });
         }
     
         async function c(seconds){
-            for(let t_loop=seconds; t_loop>0; t_loop--){ /* Variável de loop 't' renomeada para 't_loop' para clareza */
-                r('✅ Aguardando '+t_loop+'s...');
-                await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
-            }
+          for(let t_loop=seconds; t_loop>0; t_loop--){ /* Variável de loop 't' renomeada para 't_loop' para clareza */
+            r('✅ Aguardando '+t_loop+'s...');
+            await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+          }
         }
     
         async function d(){
-            await a(); /* Espera o primeiro clique em 'Continuar' se houver */
-            r('🚀 Script iniciado após clique manual!');
-            let e_loop = true; /* Variável 'e' renomeada para 'e_loop' para clareza */
-            while(e_loop){
-                r('⏸️ Tentando pausar...');
-                const paused = i('Pausar');
-                if(paused){
-                    await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
-                    r('▶️ Tentando continuar...');
-                    const continued = i('Continuar');
-                    if(continued){
-                        await c(20);
-                    } else {
-                        r('⚠️ Botão Continuar indisponível. Tentando em 5s...');
-                        await c(5);
-                    }
-                } else {
-                    r('⚠️ Botão Pausar indisponível. Tentando em 5s...');
-                    await c(5);
-                }
+          await a(); /* Espera o primeiro clique em 'Continuar' se houver */
+          r('🚀 Script iniciado após clique manual!');
+          let e_loop = true; /* Variável 'e' renomeada para 'e_loop' para clareza */
+          while(e_loop){
+            r('⏸️ Tentando pausar...');
+            const paused = i('Pausar');
+            if(paused){
+              await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+              r('▶️ Tentando continuar...');
+              const continued = i('Continuar');
+              if(continued){
+                await c(20);
+              } else {
+                r('⚠️ Botão Continuar indisponível. Tentando em 5s...');
+                await c(5);
+              }
+            } else {
+              r('⚠️ Botão Pausar indisponível. Tentando em 5s...');
+              await c(5);
             }
+          }
         }
         d();
-    }, 1000);
-})();">Script Arvore</a>
+      }, 1000);
+    })();">Script Arvore</a>
 
 
+        
         <div class="instructions">
             👉 Se não vê a barra de favoritos, ative ela no navegador (Ctrl+Shift+B).
         </div>
