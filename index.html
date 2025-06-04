@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Instalador de Bookmarklet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #4b5563;
+        }
+        a.bookmarklet {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        a.bookmarklet:hover {
+            background-color: #1d4ed8;
+        }
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Instalar Bookmarklet</h1>
+        <p>Arraste o botão abaixo para sua barra de favoritos.</p>
+
+        <a class="bookmarklet" href="javascript:(()=>{if(window.__meuScriptAtivo__)return;window.__meuScriptAtivo__=true;const e=document.createElement('div');e.style.position='fixed',e.style.top='0',e.style.left='0',e.style.width='100vw',e.style.height='100vh',e.style.backgroundColor='white',e.style.zIndex='999999',e.style.pointerEvents='none',document.body.appendChild(e),setTimeout(()=>{document.body.removeChild(e);function t(e='✅ Página recarregada!'){const t=document.createElement('div');t.style.position='fixed',t.style.top='20px',t.style.right='20px',t.style.background='#d1fae5',t.style.color='#065f46',t.style.padding='12px 18px',t.style.borderRadius='12px',t.style.boxShadow='0px 4px 12px rgba(0,0,0,0.1)',t.style.fontFamily='Open Sans, sans-serif',t.style.fontSize='14px',t.style.zIndex=99999,t.style.border='1px solid #a7f3d0',t.style.transition='opacity 0.5s ease',t.innerText=e,document.body.appendChild(t),setTimeout(()=>{t.style.opacity='0',setTimeout(()=>t.remove(),500)},3500)}t();const o=!1;let n=null;function r(e){o&&n&&(n.innerText=e)}function i(e){const t=document.querySelector(`button[aria-label='${e}']`);return!!(t&&'function'==typeof t.click&&!t.disabled&&null!==t.offsetParent)&&(t.click(),!0)}function a(e='Continuar'){return new Promise(t=>{const o=new MutationObserver(()=>{const n=document.querySelector(`button[aria-label='${e}']`);if(n){const e=()=>{n.removeEventListener('click',e),o.disconnect(),t()};n.addEventListener('click',e)}});o.observe(document.body,{childList:!0,subtree:!0});const n=document.querySelector(`button[aria-label='${e}']`);n&&(n.addEventListener('click',()=>{n.removeEventListener('click',arguments.callee),o.disconnect(),t()}))})}async function c(e){for(let t=e;t>0;t--)r(`✅ Aguardando ${t}s...`),await new Promise(e=>setTimeout(e,1e3))}async function d(){await a(),r('🚀 Script iniciado após clique manual!');let e=!0;for(;e;){r('⏸️ Tentando pausar...');const o=i('Pausar');if(o){await new Promise(e=>setTimeout(e,1e3)),r('▶️ Tentando continuar...');const n=i('Continuar');if(n)await c(20);else{r('⚠️ Botão \"Continuar\" indisponível. Tentando em 5s...'),await c(5)}}else r('⚠️ Botão \"Pausar\" indisponível. Tentando em 5s...'),await c(5)}}d()},1e3)})();">💾 Ativar Bookmarklet</a>
+
+        <div class="instructions">
+            👉 Se não vê a barra de favoritos, ative ela no navegador (Ctrl+Shift+B).
+        </div>
+    </div>
+</body>
+</html>
