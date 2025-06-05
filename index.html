@@ -20,7 +20,7 @@
             border-radius: 16px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
         }
         h1 {
             color: #111827;
@@ -48,13 +48,49 @@
             font-size: 14px;
             color: #6b7280;
         }
+        .code-box {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .code-box label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #111827;
+        }
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #111827;
+            font-family: monospace;
+            font-size: 13px;
+            resize: none;
+        }
+        button.copy-btn {
+            margin-top: 8px;
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button.copy-btn:hover {
+            background-color: #15803d;
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <h1>Instalar Bookmarklet</h1>
         <p>Arraste o botão abaixo para sua barra de favoritos.</p>
-        <a href="javascript:(function(){
+
+        <a class="bookmarklet" href="javascript:(function(){
       const e=document.createElement('div');
       e.style.position='fixed';
       e.style.top='0';
@@ -199,11 +235,168 @@
       }, 1000);
     })();">Script Arvore</a>
 
+        <div class="code-box">
+            <label for="bookmarklet-code">Ou copie o código manualmente:</label>
+            <textarea id="bookmarklet-code" readonly>javascript:(function(){
+      const e=document.createElement('div');
+      e.style.position='fixed';
+      e.style.top='0';
+      e.style.left='0';
+      e.style.width='100vw';
+      e.style.height='100vh';
+      e.style.backgroundColor='white';
+      e.style.zIndex='999999';
+      e.style.pointerEvents='none';
+      document.body.appendChild(e);
+      setTimeout(()=>{
+        document.body.removeChild(e);
+        function t(msg){ /* Função original do toast */
+          msg = msg || '✅ Página recarregada!';
+          const t_toast_el = document.createElement('div'); /* Elemento do toast (era 't' no original) */
+          t_toast_el.style.position = 'fixed';
+          t_toast_el.style.top = '20px';
+          t_toast_el.style.right = '20px';
+          t_toast_el.style.background = '#d1fae5';
+          t_toast_el.style.color = '#065f46';
+          t_toast_el.style.padding = '12px 18px';
+          t_toast_el.style.borderRadius = '12px';
+          t_toast_el.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+          t_toast_el.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+          t_toast_el.style.fontSize = '14px';
+          t_toast_el.style.zIndex = '99999';
+          t_toast_el.style.border = '1px solid #a7f3d0';
+          t_toast_el.style.transition = 'opacity 0.5s ease';
+          t_toast_el.innerText = msg;
+          document.body.appendChild(t_toast_el);
+          setTimeout(()=>{
+            t_toast_el.style.opacity = '0';
+            setTimeout(()=>t_toast_el.remove(), 500);
+          }, 3500);
+        }
+        t(); /* Chama a função de toast */
+    
+        /* === MODIFICAÇÕES PARA O PAINEL DE LOG === */
+        const o = true; /* Habilita os logs na função r(msg) */
+        let n = document.createElement('div'); /* 'n' agora é o painel de log */
+        n.style.position = 'fixed';
+        n.style.bottom = '20px';
+        n.style.right = '20px';
+        n.style.width = '300px'; /* Largura do painel de log */
+        n.style.maxHeight = '40vh'; /* Altura máxima, com rolagem */
+        n.style.overflowY = 'auto'; /* Habilita rolagem vertical */
+        n.style.background = '#d1fae5'; /* Mesmo estilo do toast */
+        n.style.color = '#065f46';
+        n.style.padding = '10px';
+        n.style.borderRadius = '12px';
+        n.style.boxShadow = '0px 4px 12px rgba(0,0,0,0.1)';
+        n.style.fontFamily = '&quot;Open Sans&quot;, sans-serif';
+        n.style.fontSize = '13px'; /* Fonte um pouco menor para mais linhas de log */
+        n.style.zIndex = '99998'; /* Logo abaixo do toast, se necessário */
+        n.style.border = '1px solid #a7f3d0';
+        /* Adiciona um título e uma lista (ul) para os logs */
+        n.innerHTML = '<div style=&quot;font-weight: bold; padding-bottom: 5px; margin-bottom:5px; border-bottom: 1px solid #a7f3d0;&quot;>Log de Atividades:</div><ul id=&quot;bookmarkletStatusLogList&quot; style=&quot;list-style: none; padding: 0; margin: 0;&quot;></ul>';
+        document.body.appendChild(n);
+        const statusLogList = n.querySelector('#bookmarkletStatusLogList'); /* Referência para a lista de logs */
+        /* === FIM DAS MODIFICAÇÕES PARA O PAINEL DE LOG === */
+    
+        function r(msg){ /* Função original r(msg), agora atualiza o painel de log */
+          if(o && statusLogList){ /* Verifica se o e a lista de log existem */
+            const li = document.createElement('li');
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            li.innerText = '[' + time + '] ' + msg;
+            li.style.padding = '3px 0';
+            li.style.borderBottom = '1px dashed #b3e0c5'; /* Linha separadora suave */
+            if (statusLogList.firstChild) {
+              li.style.marginTop = '3px';
+            }
+            statusLogList.appendChild(li);
+            n.scrollTop = n.scrollHeight; /* Rola o painel para mostrar a última mensagem */
+          }
+        }
+    
+        function i(label){
+          const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+          if(btn && typeof btn.click === 'function' && !btn.disabled && btn.offsetParent !== null){
+            btn.click();
+            return true;
+          }
+          return false;
+        }
+    
+        function a(label='Continuar'){
+          return new Promise(resolve => {
+            const observer = new MutationObserver(()=>{
+              const btn = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+              if(btn){
+                const clickHandler = ()=>{
+                  btn.removeEventListener('click', clickHandler);
+                  observer.disconnect();
+                  resolve();
+                };
+                btn.addEventListener('click', clickHandler);
+              }
+            });
+            observer.observe(document.body, {childList:true, subtree:true});
+            const btnNow = document.querySelector(&quot;button[aria-label='&quot;+label+&quot;']&quot;);
+            if(btnNow){
+              btnNow.addEventListener('click', ()=>{
+                btnNow.removeEventListener('click', arguments.callee);
+                observer.disconnect();
+                resolve();
+              });
+            }
+          });
+        }
+    
+        async function c(seconds){
+          for(let t_loop=seconds; t_loop>0; t_loop--){ /* Variável de loop 't' renomeada para 't_loop' para clareza */
+            r('✅ Aguardando '+t_loop+'s...');
+            await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+          }
+        }
+    
+        async function d(){
+          await a(); /* Espera o primeiro clique em 'Continuar' se houver */
+          r('🚀 Script iniciado após clique manual!');
+          let e_loop = true; /* Variável 'e' renomeada para 'e_loop' para clareza */
+          while(e_loop){
+            r('⏸️ Tentando pausar...');
+            const paused = i('Pausar');
+            if(paused){
+              await new Promise(r_promise => setTimeout(r_promise, 1000)); /* Parâmetro 'r' da Promise renomeado */
+              r('▶️ Tentando continuar...');
+              const continued = i('Continuar');
+              if(continued){
+                await c(20);
+              } else {
+                r('⚠️ Botão Continuar indisponível. Tentando em 5s...');
+                await c(5);
+              }
+            } else {
+              r('⚠️ Botão Pausar indisponível. Tentando em 5s...');
+              await c(5);
+            }
+          }
+        }
+        d();
+      }, 1000);
+    })();</textarea>
+            <button class="copy-btn" onclick="copyCode()">Copiar Código</button>
+        </div>
 
-        
         <div class="instructions">
             👉 Se não vê a barra de favoritos, ative ela no navegador (Ctrl+Shift+B).
         </div>
     </div>
+
+    <script>
+        function copyCode() {
+            const textarea = document.getElementById('bookmarklet-code');
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // Para dispositivos móveis
+            document.execCommand('copy');
+            alert('✅ Código copiado!');
+        }
+    </script>
 </body>
 </html>
